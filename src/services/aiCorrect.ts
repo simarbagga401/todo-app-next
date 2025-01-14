@@ -11,7 +11,7 @@ export const aiCorrect = async ({
   title: string;
   mutateTodos: () => void;
 }) => {
-  const aiCorrectedTitle = await axios.post("/api/grammar", {
+  const aiCorrectedTitle = await axios.post("/api/grammear", {
     text: title,
   });
 
