@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
-import { generateText } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 const correctText = async (inputText: string) => {
-  const { text: correctedText } = await generateText({
-    model: openai("gpt-3.5-turbo"),
-    prompt: "Grammatically Correct the following text: " + inputText,
-    temperature: 1,
-  });
-
+  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const result = await model.generateContent(
+    "Grammatically Correct the following text: " + inputText
+  );
+  const correctedText = result.response.text();
   return correctedText;
 };
 
