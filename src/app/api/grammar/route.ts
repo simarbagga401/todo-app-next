@@ -5,11 +5,19 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 const correctText = async (inputText: string) => {
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-  const result = await model.generateContent(
-    "Grammatically Correct the following text: " + inputText
-  );
-  const correctedText = result.response.text();
-  return correctedText;
+  
+  try {
+    const prompt = `Task: Grammar correction
+Please improve the following text's grammar while preserving its meaning:
+"${inputText.trim()}"`;
+
+    const result = await model.generateContent(prompt);
+    const correctedText = result.response.text();
+    return correctedText;
+  } catch (error) {
+    console.error('Gemini API error:', error);
+    return inputText; // Return original text if correction fails
+  }
 };
 
 export async function POST(req: Request) {
