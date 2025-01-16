@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Todos } from "@/components/Todos";
+import { AiPrompt } from "@/components/AiPrompt";
 
 export default function Home() {
 
@@ -10,6 +11,7 @@ export default function Home() {
       <Link href="/newTodo" className="text-blue-500">
         Create Todo
       </Link>
+      <AiPrompt />
     </div>
   );
 }
